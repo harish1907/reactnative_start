@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView, Image } from "react-native";
 
 const SplashScreen = ({ navigation }: any) => {
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate("UserScreens");
+    }, 500)
+  }, [])
   return (
     <SafeAreaView
       style={{
