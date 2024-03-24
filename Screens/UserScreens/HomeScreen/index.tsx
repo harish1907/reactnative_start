@@ -1,31 +1,47 @@
-import React from 'react';
-import {View, Text, StyleSheet, Button} from "react-native";
-import { useSelector, useDispatch } from 'react-redux';
-import { decrement, increment } from "../../../store/CounterSlice";
+import React, { useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAllProducts } from "../../../store/ProductSlice";
 
 const HomeScreen = () => {
-  const count = useSelector((state: any) => state.counter.value);
+  const allProducts = useSelector((state: any) => state.products);
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, []);
 
   return (
-    <View style={styles.container}>
-      <Button title="Increment" onPress={() => dispatch(increment())}/>
-      <Text style={styles.textStyle}>{count}</Text>
-      <Button title="Decrement" onPress={() => dispatch(decrement())}/>
-    </View>
-  )
-}
+    <SafeAreaView>
+      <FlatList
+        data={allProducts?.products}
+        keyExtractor={(item: any) => item?._id}
+        renderItem={({ item }: any) => {
+          return (
+            <View>
+              <Text>name: {item?.name}</Text>
+              <Text>price: {item?.price}</Text>
+              <Text>quantity: {item?.quantity}</Text>
+              <Text>place: {item?.place}</Text>
+            </View>
+          );
+        }}
+      />
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems:"center"
-  },
   textStyle: {
     color: "green",
-    fontSize: 25
-  }
-})
+    fontSize: 25,
+  },
+});
 
 export default HomeScreen;
