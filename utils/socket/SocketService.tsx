@@ -1,7 +1,5 @@
 import io from "socket.io-client";
 
-// export const nodeURL = "http://65.0.30.73:5000";
-// export const nodeURL = "http://3.108.218.24:5000";
 export const nodeURL = "http://localhost:5000";
 
 const socket = io(nodeURL);
